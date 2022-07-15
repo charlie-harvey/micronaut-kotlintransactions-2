@@ -1,9 +1,9 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.6.21"
-    id("org.jetbrains.kotlin.kapt") version "1.6.21"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
+    id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    id("org.jetbrains.kotlin.kapt") version "1.7.10"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.micronaut.application") version "3.4.1"
+    id("io.micronaut.application") version "3.5.0"
 }
 
 version = "0.1"
@@ -14,28 +14,29 @@ val kotlinVersion = project.properties["kotlinVersion"]
 repositories {
     mavenCentral()
     maven { url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/") }
+    maven { url = uri("https://s01.oss.sonatype.org/content/repositories/releases/") }
     maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 dependencies {
 
-    kapt("io.micronaut.data:micronaut-data-processor:3.5.0-SNAPSHOT")
+    kapt("io.micronaut.data:micronaut-data-processor:3.5.0")
     kapt("io.micronaut:micronaut-http-validation")
 
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
-    implementation("io.micronaut.data:micronaut-data-r2dbc:3.5.0-SNAPSHOT")
+    implementation("io.micronaut.data:micronaut-data-r2dbc:3.5.0")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut.liquibase:micronaut-liquibase")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk9:1.6.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.6.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk9:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.6.4")
 
     implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("com.github.f4b6a3:uuid-creator:4.6.1")
@@ -51,9 +52,9 @@ dependencies {
     kaptTest("io.micronaut:micronaut-inject-java")
     testImplementation("io.micronaut.test:micronaut-test-kotest5:3.4.0")
     testImplementation("io.mockk:mockk:1.12.4")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.3.1")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.3.1")
-    testImplementation("io.kotest:kotest-property:5.3.1")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.3.2")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.3.2")
+    testImplementation("io.kotest:kotest-property:5.3.2")
 
     testImplementation("org.testcontainers:junit-jupiter")
     // If this isn't here it can't connect to the db

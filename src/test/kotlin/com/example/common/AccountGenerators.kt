@@ -11,7 +11,7 @@ import java.util.*
 fun alphaNumericStringArb(min: Int, max: Int): Arb<String> = Arb.stringPattern("[a-zA-Z0-9]{$min,$max}")
 val alphaNumericFiveToTwentyArb: Arb<String> = alphaNumericStringArb(5, 20)
 
-val gradeArb: Arb<String> = Arb.nats(13).map { it.toString() }.merge(arbitrary { "K" })
+val gradeArb: Arb<String> = Arb.positiveInt(13).map { it.toString() }.merge(arbitrary { "K" })
 val langArb: Arb<String> = Arb.element("en", "es")
 val uuidArb = Arb.uuid(UUIDVersion.V1, false)
 val emailArb: Arb<String> = Arb.email(alphaNumericStringArb(1, 100), alphaNumericStringArb(1, 100))
@@ -29,8 +29,8 @@ fun userAccountEntityArb(
     primaryLanguage: String? = null,
     active: Boolean? = null,
     tobedeleted: Boolean? = null,
-    forcePasswordReset: Arb<Boolean> = Arb.bool(),
-    passwordSetByRoster: Arb<Boolean> = Arb.bool(),
+    forcePasswordReset: Arb<Boolean> = Arb.boolean(),
+    passwordSetByRoster: Arb<Boolean> = Arb.boolean(),
     externalSourceId: String? = null,
     password: String? = null,
     userDefinedPassword: String? = null,
@@ -46,8 +46,8 @@ fun userAccountEntityArb(
     alphaNumericFiveToTwentyArb, // firstName
     alphaNumericFiveToTwentyArb, // lastName
     langArb, // primaryLanguage
-    Arb.bool(), // active
-    Arb.bool(), // tobedeleted
+    Arb.boolean(), // active
+    Arb.boolean(), // tobedeleted
     alphaNumericFiveToTwentyArb, // externalSourceId
     alphaNumericFiveToTwentyArb, // password
     alphaNumericFiveToTwentyArb, // userDefinedPassword
@@ -96,7 +96,7 @@ fun createUserAccountObjectArb(
     langArb, // primaryLanguage
     alphaNumericFiveToTwentyArb, // password,
     alphaNumericFiveToTwentyArb, // userDefinedPassword
-    Arb.bool(), // passwordSetByRoster
+    Arb.boolean(), // passwordSetByRoster
     alphaNumericFiveToTwentyArb, // externalSourceId
     gradeArb, // grade
     emailArb // roster email

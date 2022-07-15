@@ -7,7 +7,7 @@ import com.example.common.userAccountEntityArb
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.arbitrary.*
-import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import io.mockk.clearAllMocks
 import kotlinx.coroutines.runBlocking
 
