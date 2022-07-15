@@ -1,7 +1,7 @@
 r2dbc:
   datasources:
-    # accounts-datasource:
-    default:
+    # default:
+    accounts-datasource:
       schema-generate: CREATE_DROP
       dialect: MYSQL
       url: r2dbc:tc:mysql:///accounts?TC_IMAGE_TAG=5.7&TC_INITSCRIPT=db/init_account_database.sql

@@ -75,7 +75,9 @@ open class UserAccountService(
     @Transactional
     @TransactionalAdvice(ACCOUNTS_DATASOURCE)
     open suspend fun deleteByUsernameAndSiteId(username: String, siteId: Int) {
+        println(" **** deleteByUsernameAndSiteId 1")
         userAccountRepository.deleteByUsernameAndSiteId(username, siteId)
+        println(" **** deleteByUsernameAndSiteId 2")
     }
 
     @Transactional

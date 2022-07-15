@@ -8,7 +8,6 @@ import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.arbitrary.*
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
-import io.mockk.clearAllMocks
 import kotlinx.coroutines.runBlocking
 
 @MicronautTest(startApplication = false, transactional = false)
@@ -34,27 +33,33 @@ open class UserAccountServiceTest(
 
     @AfterEach
     open fun afterEach() = runBlocking {
-        println(" **** afterEach: delete userAccount")
-        userAccountService.deleteByUsernameAndSiteId(createUserAccountObject.username, createUserAccountObject.siteId)
-        clearAllMocks()
+        // println(" **** afterEach: delete userAccount")
+        // userAccountService.deleteByUsernameAndSiteId(createUserAccountObject.username, createUserAccountObject.siteId)
         println(" **** afterEach done")
     }
 
     @Test
     open suspend fun findByUsername() {
+        println(" **** findByUsername")
         val ua = userAccountEntityArb(
             siteId = validUserAccount.siteId,
             tobedeleted = false,
             active = true,
             username = "pants"
         ).next()
+        println(" **** findByUsername: saving user")
         userAccountService.save(ua)
+        println(" **** findByUsername: user saved")
 
+        println(" **** findByUsername: find user")
         userAccountService.findBySiteIdAndUsername(
             siteId = validUserAccount.siteId,
             username = "pants"
         ).shouldBe(ua)
+        println(" **** findByUsername: user found")
 
+        println(" **** findByUsername: deleting user")
         userAccountService.deleteByUsernameAndSiteId(ua.username, ua.siteId)
+        println(" **** findByUsername: user deleted")
     }
 }
