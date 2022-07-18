@@ -10,6 +10,8 @@ r2dbc:
       url: r2dbc:mysql://localhost:3306/accounts
       username: accounts
       password: secret
+      ssl: DISABLED
+      zeroDateOption: USE_NULL
 netty:
   default:
     allocator:

@@ -7,3 +7,5 @@ r2dbc:
       url: r2dbc:tc:mysql:///accounts?TC_IMAGE_TAG=5.7&TC_INITSCRIPT=db/init_account_database.sql
       username: accounts
       password: secret
+      ssl: DISABLED
+      zeroDateOption: USE_NULL
