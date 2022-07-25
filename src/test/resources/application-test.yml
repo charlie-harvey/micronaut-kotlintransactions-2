@@ -1,11 +1,26 @@
+datasources:
+  # default:
+  accounts-datasource:
+    # jdbcUrl: jdbc:tc:mysql:5.7.34:///accounts_r2dbc?TC_INITSCRIPT=db/migration/accounts/V2__accounts_userAccounts.sql
+    # jdbcUrl: jdbc:tc:mysql:///accounts_r2dbc?TC_IMAGE_TAG=5.7.34&TC_INITSCRIPT=db/init_account_database.sql
+    jdbcUrl: jdbc:mysql://${db-host}:${db-port}/test?TC_IMAGE_TAG=5.7.34&TC_INITSCRIPT=db/init_account_database.sql
+    username: ${db-username}
+    password: ${db-password}
+    # driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    dialect: MYSQL
+    ssl: DISABLED
+    zeroDateOption: USE_NULL
+
 r2dbc:
   datasources:
     # default:
-    accounts-datasource:
-      schema-generate: CREATE_DROP
+    accounts-async-datasource:
+      # url: r2dbc:tc:mysql:///test?TC_IMAGE_TAG=5.7.34
+      # url: r2dbc:tc:mysql:///test?TC_IMAGE_TAG=5.7.34&TC_INITSCRIPT=db/migration/accounts/V2__accounts_userAccounts.sql
+      # url: r2dbc:tc:mysql:///test?TC_IMAGE_TAG=5.7.34&TC_INITSCRIPT=db/init_account_database.sql
+      url: r2dbc:mysql://${db-host}:${db-port}/test?TC_IMAGE_TAG=5.7.34&TC_INITSCRIPT=db/init_account_database.sql
+      username: ${db-username}
+      password: ${db-password}
       dialect: MYSQL
-      url: r2dbc:tc:mysql:///accounts?TC_IMAGE_TAG=5.7&TC_INITSCRIPT=db/init_account_database.sql
-      username: accounts
-      password: secret
       ssl: DISABLED
       zeroDateOption: USE_NULL

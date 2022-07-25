@@ -1,7 +1,7 @@
 package com.example.account.service
 
 import at.favre.lib.crypto.bcrypt.BCrypt
-import com.example.ACCOUNTS_DATASOURCE
+import com.example.ACCOUNTS_ASYNC_DATASOURCE
 import com.example.account.domain.CreateUserAccountObject
 import com.example.account.entities.UserAccount
 import com.example.account.repositories.UserAccountRepository
@@ -31,7 +31,7 @@ open class UserAccountService(
         userAccountRepository.findBySiteIdAndIdIn(siteId = siteId, ids = ids.map { OptimizedUUID(it) })
 
     @Transactional
-    @TransactionalAdvice(ACCOUNTS_DATASOURCE)
+    @TransactionalAdvice(ACCOUNTS_ASYNC_DATASOURCE)
     open suspend fun createUserAccount(createRequest: CreateUserAccountObject): UserAccount {
         val userAccountId = if (createRequest.id != null) {
             OptimizedUUID(createRequest.id)
@@ -79,7 +79,7 @@ open class UserAccountService(
         )
 
     @Transactional
-    @TransactionalAdvice(ACCOUNTS_DATASOURCE)
+    @TransactionalAdvice(ACCOUNTS_ASYNC_DATASOURCE)
     open suspend fun deleteByUsernameAndSiteId(username: String, siteId: Int) {
         // DOES NOT GET HERE FROM "afterEach()"
         println(" **** deleteByUsernameAndSiteId 1")
@@ -88,7 +88,7 @@ open class UserAccountService(
     }
 
     @Transactional
-    @TransactionalAdvice(ACCOUNTS_DATASOURCE)
+    @TransactionalAdvice(ACCOUNTS_ASYNC_DATASOURCE)
     open suspend fun changeUsersPassword(userId: UUID, password: String): Boolean {
         val hashedPassword = BCrypt.withDefaults().hashToString(10, password.toCharArray())
         return try {
@@ -104,12 +104,12 @@ open class UserAccountService(
     fun findAll(): Flow<UserAccount> = userAccountRepository.findAll()
 
     @Transactional
-    @TransactionalAdvice(ACCOUNTS_DATASOURCE)
+    @TransactionalAdvice(ACCOUNTS_ASYNC_DATASOURCE)
     open suspend fun updateUserAccounts(userAccounts: List<UserAccount>) =
         userAccountRepository.updateAll(userAccounts)
 
     @Transactional
-    @TransactionalAdvice(ACCOUNTS_DATASOURCE)
+    @TransactionalAdvice(ACCOUNTS_ASYNC_DATASOURCE)
     open suspend fun save(userAccount: UserAccount) =
         userAccountRepository.save(userAccount)
 }

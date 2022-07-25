@@ -1,8 +1,9 @@
 package com.example.account.repositories
 
-import com.example.ACCOUNTS_DATASOURCE
+import com.example.ACCOUNTS_ASYNC_DATASOURCE
 import com.example.db.OptimizedUUID
 import com.example.account.entities.UserAccount
+import io.micronaut.data.annotation.Expandable
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.Query
 import io.micronaut.data.model.Page
@@ -16,8 +17,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.transaction.Transactional
 import javax.validation.constraints.NotNull
 
-@TransactionalAdvice(ACCOUNTS_DATASOURCE)
-@R2dbcRepository(value = ACCOUNTS_DATASOURCE, dialect = Dialect.MYSQL)
+@TransactionalAdvice(ACCOUNTS_ASYNC_DATASOURCE)
+@R2dbcRepository(value = ACCOUNTS_ASYNC_DATASOURCE, dialect = Dialect.MYSQL)
 // @R2dbcRepository(dialect = Dialect.MYSQL)
 interface UserAccountRepository : CoroutineCrudRepository<UserAccount, OptimizedUUID>,
     CoroutineJpaSpecificationExecutor<UserAccount> {
@@ -44,7 +45,7 @@ interface UserAccountRepository : CoroutineCrudRepository<UserAccount, Optimized
     )
     suspend fun findByIdsIn(
         siteId: Int,
-        ids: Collection<OptimizedUUID>
+        @Expandable ids: Collection<OptimizedUUID>
     ): List<UserAccount>
 
     suspend fun findBySiteIdAndUsername(

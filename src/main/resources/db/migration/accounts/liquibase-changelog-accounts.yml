@@ -1,0 +1,10 @@
+#liquibase-changelog-customer.yml
+databaseChangeLog:
+  - changeSet:
+      id: V2__accounts_userAccounts
+      author: "charvey"
+      sqlFile:
+        encoding: utf8
+        relativeToChangelogFile: true
+        stripComments: true
+        path: "V2__accounts_userAccounts.sql"

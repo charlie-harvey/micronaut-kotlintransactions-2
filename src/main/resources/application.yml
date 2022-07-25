@@ -1,17 +1,36 @@
 micronaut:
   application:
     name: kotlintransactions-2
+
+datasources:
+  # default:
+  accounts-datasource:
+    jdbcUrl: jdbc:mysql://localhost:3306/accounts_r2dbc
+    username: accounts_r2dbc
+    password: secret
+    driverClassName: com.mysql.cj.jdbc.Driver
+    dialect: MYSQL
+    ssl: DISABLED
+    zeroDateOption: USE_NULL
+
 r2dbc:
   datasources:
     # default:
-    accounts-datasource:
-      schema-generate: CREATE_DROP
+    accounts-async-datasource:
       dialect: MYSQL
-      url: r2dbc:mysql://localhost:3306/accounts
-      username: accounts
+      url: r2dbc:mysql://localhost:3306/accounts_r2dbc
+      username: accounts_r2dbc
       password: secret
       ssl: DISABLED
       zeroDateOption: USE_NULL
+
+liquibase:
+  enabled: true
+  datasources:
+    accounts-datasource:
+      enabled: true
+      change-log: 'classpath:db/migration/accounts/liquibase-changelog-accounts.yml'
+
 netty:
   default:
     allocator:

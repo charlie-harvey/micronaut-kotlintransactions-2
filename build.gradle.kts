@@ -27,6 +27,7 @@ dependencies {
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.data:micronaut-data-jdbc:3.5.0")
     implementation("io.micronaut.data:micronaut-data-r2dbc:3.5.0")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
@@ -44,6 +45,7 @@ dependencies {
     implementation("at.favre.lib:bcrypt:0.9.0")
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("dev.miku:r2dbc-mysql")
     runtimeOnly("mysql:mysql-connector-java")

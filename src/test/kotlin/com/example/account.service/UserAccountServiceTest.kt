@@ -32,12 +32,12 @@ open class UserAccountServiceTest(
         println(" **** beforeEach done")
     }
 
-//    @AfterEach
-//    fun afterEach() = runBlocking {
-//        println(" **** afterEach: delete userAccount")
-//        userAccountService.deleteByUsernameAndSiteId(createUserAccountObject.username, createUserAccountObject.siteId)
-//        println(" **** afterEach done")
-//    }
+    @AfterEach
+    fun afterEach() = runBlocking {
+        println(" **** afterEach: delete userAccount")
+        // userAccountService.deleteByUsernameAndSiteId(createUserAccountObject.username, createUserAccountObject.siteId)
+        println(" **** afterEach done")
+    }
 
     @Test
     suspend fun findByUsername() {
