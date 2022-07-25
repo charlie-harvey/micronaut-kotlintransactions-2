@@ -6,7 +6,8 @@ import com.example.common.createUserAccountObjectArb
 import com.example.common.userAccountEntityArb
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.property.arbitrary.*
+import io.kotest.property.arbitrary.next
+import io.kotest.property.arbitrary.single
 import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import kotlinx.coroutines.runBlocking
 
@@ -21,7 +22,7 @@ open class UserAccountServiceTest(
     private val siteId = 10000
 
     @BeforeEach
-    open fun beforeEach() = runBlocking {
+    fun beforeEach() = runBlocking {
         println(" **** beforeEach")
         createUserAccountObject = createUserAccountObjectArb(siteId = siteId, grade = "4").single()
         println(" **** beforeEach: delete userAccount")
@@ -31,15 +32,15 @@ open class UserAccountServiceTest(
         println(" **** beforeEach done")
     }
 
-    @AfterEach
-    open fun afterEach() = runBlocking {
-        // println(" **** afterEach: delete userAccount")
-        // userAccountService.deleteByUsernameAndSiteId(createUserAccountObject.username, createUserAccountObject.siteId)
-        println(" **** afterEach done")
-    }
+//    @AfterEach
+//    fun afterEach() = runBlocking {
+//        println(" **** afterEach: delete userAccount")
+//        userAccountService.deleteByUsernameAndSiteId(createUserAccountObject.username, createUserAccountObject.siteId)
+//        println(" **** afterEach done")
+//    }
 
     @Test
-    open suspend fun findByUsername() {
+    suspend fun findByUsername() {
         println(" **** findByUsername")
         val ua = userAccountEntityArb(
             siteId = validUserAccount.siteId,
@@ -57,6 +58,31 @@ open class UserAccountServiceTest(
             username = "pants"
         ).shouldBe(ua)
         println(" **** findByUsername: user found")
+
+        println(" **** findByUsername: deleting user")
+        userAccountService.deleteByUsernameAndSiteId(ua.username, ua.siteId)
+        println(" **** findByUsername: user deleted")
+    }
+
+    @Test
+    suspend fun findByUserIdsIn() {
+        println(" **** findByUserIdsIn")
+        val ua = userAccountEntityArb(
+            siteId = validUserAccount.siteId,
+            tobedeleted = false,
+            active = true,
+            username = "pants"
+        ).next()
+        println(" **** findByUserIdsIn: saving user")
+        userAccountService.save(ua)
+        println(" **** findByUserIdsIn: user saved")
+
+        println(" **** findByUserIdsIn: find users")
+        userAccountService.findByIdsIn(
+            siteId = validUserAccount.siteId,
+            ids = listOf(ua.id.uuid)
+        ).shouldBe(ua)
+        println(" **** findByUserIdsIn: users found")
 
         println(" **** findByUsername: deleting user")
         userAccountService.deleteByUsernameAndSiteId(ua.username, ua.siteId)

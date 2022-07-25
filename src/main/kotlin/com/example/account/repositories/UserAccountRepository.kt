@@ -4,6 +4,7 @@ import com.example.ACCOUNTS_DATASOURCE
 import com.example.db.OptimizedUUID
 import com.example.account.entities.UserAccount
 import io.micronaut.data.annotation.Id
+import io.micronaut.data.annotation.Query
 import io.micronaut.data.model.Page
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
@@ -32,6 +33,19 @@ interface UserAccountRepository : CoroutineCrudRepository<UserAccount, Optimized
     suspend fun findBySiteIdAndId(siteId: Int, id: OptimizedUUID): UserAccount?
 
     suspend fun findBySiteIdAndIdIn(siteId: Int, ids: Collection<OptimizedUUID>): List<UserAccount>
+
+    @Query(
+        """
+            SELECT *
+            FROM userAccount
+            WHERE siteId = :siteId
+            AND id IN(:ids)
+        """
+    )
+    suspend fun findByIdsIn(
+        siteId: Int,
+        ids: Collection<OptimizedUUID>
+    ): List<UserAccount>
 
     suspend fun findBySiteIdAndUsername(
         siteId: Int,

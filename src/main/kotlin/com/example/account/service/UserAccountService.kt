@@ -72,9 +72,16 @@ open class UserAccountService(
             username = username
         )
 
+    suspend fun findByIdsIn(siteId: Int, ids: Collection<UUID>): List<UserAccount> =
+        userAccountRepository.findByIdsIn(
+            siteId = siteId,
+            ids = ids.map { OptimizedUUID(it) }
+        )
+
     @Transactional
     @TransactionalAdvice(ACCOUNTS_DATASOURCE)
     open suspend fun deleteByUsernameAndSiteId(username: String, siteId: Int) {
+        // DOES NOT GET HERE FROM "afterEach()"
         println(" **** deleteByUsernameAndSiteId 1")
         userAccountRepository.deleteByUsernameAndSiteId(username, siteId)
         println(" **** deleteByUsernameAndSiteId 2")
