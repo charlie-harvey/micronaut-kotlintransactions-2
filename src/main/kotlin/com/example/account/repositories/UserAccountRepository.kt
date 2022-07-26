@@ -41,11 +41,12 @@ interface UserAccountRepository : CoroutineCrudRepository<UserAccount, Optimized
             FROM userAccount
             WHERE siteId = :siteId
             AND id IN(:ids)
-        """
+        """, nativeQuery = true
     )
     suspend fun findByIdsIn(
         siteId: Int,
-        @Expandable ids: Collection<OptimizedUUID>
+        // @Expandable ids: Collection<OptimizedUUID>,
+        ids: Collection<OptimizedUUID>
     ): List<UserAccount>
 
     suspend fun findBySiteIdAndUsername(
